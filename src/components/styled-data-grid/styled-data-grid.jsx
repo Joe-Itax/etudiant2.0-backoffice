@@ -14,7 +14,8 @@ const getSelectedHoverBackgroundColor = (color, mode) =>
   mode === "dark" ? darken(color, 0.4) : lighten(color, 0.4);
 
 const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
-  "& .super-app-theme--true": {
+  "& .super-app-theme--true-User": {
+    textDecoration: "line-through",
     backgroundColor: getBackgroundColor(
       theme.palette.error.main,
       theme.palette.mode
@@ -38,7 +39,32 @@ const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
       },
     },
   },
-  "& .super-app-theme--false": {
+  "& .super-app-theme--false-User": {
+    backgroundColor: getBackgroundColor(
+      theme.palette.info.main,
+      theme.palette.mode
+    ),
+    "&:hover": {
+      backgroundColor: getHoverBackgroundColor(
+        theme.palette.info.main,
+        theme.palette.mode
+      ),
+    },
+    "&.Mui-selected": {
+      backgroundColor: getSelectedBackgroundColor(
+        theme.palette.info.main,
+        theme.palette.mode
+      ),
+      "&:hover": {
+        backgroundColor: getSelectedHoverBackgroundColor(
+          theme.palette.info.main,
+          theme.palette.mode
+        ),
+      },
+    },
+  },
+  "& .super-app-theme--false-Administrator": {
+    fontWeight: "bold",
     backgroundColor: getBackgroundColor(
       theme.palette.success.main,
       theme.palette.mode

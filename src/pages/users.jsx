@@ -1,4 +1,5 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
+import { Add, Cancel, Delete, Edit, Save, Replay } from "@mui/icons-material";
 import {
   GridToolbarContainer,
   GridToolbarExport,
@@ -11,7 +12,7 @@ import React, { useContext, useEffect, useState } from "react";
 import usersContext from "../components/contexts/users.context";
 import universityContext from "../components/contexts/university.context";
 // import PropTypes from "prop-types";
-import { Add, Cancel, Delete, Edit, Save } from "@mui/icons-material";
+
 import axiosInstance from "../utils/axios-instance";
 import CreateNewUser from "../components/create-user/create-user";
 import CustomizedSnackbars from "../components/feedback/notif";
@@ -19,6 +20,9 @@ import {
   getAllUsers,
   getAllUniversities,
 } from "../components/get-datas/get-data";
+
+import "./style.css";
+
 export default function Users() {
   const [messageNotif, setMessageNotif] = useState("");
   const [severityNotif, setSeverityNotif] = useState("");
@@ -47,6 +51,9 @@ export default function Users() {
   }, [university]);
 
   const findNameUniversityById = (id) => {
+    return university.find((university) => university.id === id).title;
+  };
+  const findAbbreUniversityById = (id) => {
     return university.find((university) => university.id === id).abbreviation;
   };
 
@@ -59,10 +66,19 @@ export default function Users() {
       university: user.universityId
         ? findNameUniversityById(user.universityId)
         : "Null",
+      univ_abrev: user.universityId
+        ? findAbbreUniversityById(user.universityId)
+        : "Null",
       role: user.role,
       isDeleted: user.isDeleted,
-      createdAt: user.createdAt.slice(0, 10),
-      updatedAt: user.updatedAt.slice(0, 10),
+      createdAt: `${user.createdAt.slice(0, 10)}  ${user.createdAt.slice(
+        10,
+        16
+      )}`,
+      updatedAt: `${user.updatedAt.slice(0, 10)}  ${user.updatedAt.slice(
+        10,
+        16
+      )}`,
     };
   });
 
@@ -82,10 +98,19 @@ export default function Users() {
           university: user.universityId
             ? findNameUniversityById(user.universityId)
             : "Null",
+          univ_abrev: user.universityId
+            ? findAbbreUniversityById(user.universityId)
+            : "Null",
           role: user.role,
           isDeleted: user.isDeleted,
-          createdAt: user.createdAt.slice(0, 10),
-          updatedAt: user.updatedAt.slice(0, 10),
+          createdAt: `${user.createdAt.slice(0, 10)}  ${user.createdAt.slice(
+            10,
+            16
+          )}`,
+          updatedAt: `${user.updatedAt.slice(0, 10)}  ${user.updatedAt.slice(
+            10,
+            16
+          )}`,
         };
       })
     );
@@ -192,7 +217,7 @@ export default function Users() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 60 },
+    { field: "id", headerName: "ID", width: 55 },
     {
       field: "firstname",
       headerName: "First name",
@@ -208,7 +233,7 @@ export default function Users() {
     {
       field: "role",
       headerName: "Role",
-      width: 110,
+      width: 80,
       editable: true,
     },
     {
@@ -220,23 +245,28 @@ export default function Users() {
     {
       field: "university",
       headerName: "University",
-      width: 110,
+      width: 100,
       editable: true,
+    },
+    {
+      field: "univ_abrev",
+      headerName: "Univ-abbre",
+      width: 100,
     },
     {
       field: "updatedAt",
       headerName: "UpdatedAt",
-      width: 110,
+      width: 150,
     },
     {
       field: "createdAt",
       headerName: "CreatedAt",
-      width: 110,
+      width: 150,
     },
     {
       field: "isDeleted",
       headerName: "Deleted",
-      width: 110,
+      width: 60,
       editable: true,
       headerClassName: "super-app-theme--header",
     },
@@ -301,8 +331,30 @@ export default function Users() {
     setOpen(false);
   };
 
+  const [updateDataLoading, setUpdateDataLoading] = useState(false);
+
+  const handleClickUpdateData = async () => {
+    setUpdateDataLoading(true);
+    try {
+      const usersUpdated = await getAllUsers();
+
+      setUsers(usersUpdated.allUsers);
+    } catch (error) {
+      console.log("error: ", error);
+    } finally {
+      setUpdateDataLoading(false);
+    }
+  };
+
+  const dataLoading = !users.length > 0 || !university.length > 0;
+
   return (
-    <>
+    <div className="users-page">
+      {dataLoading && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CircularProgress size={100} />
+        </div>
+      )}
       {users.length > 0 && (
         <Box sx={{ height: 600, width: "100%" }}>
           <CustomizedSnackbars
@@ -314,8 +366,14 @@ export default function Users() {
           <Button color="primary" startIcon={<Add />} onClick={handleClickOpen}>
             Add user
           </Button>
-          <Button color="secondary" startIcon={<Delete />}>
-            Trash
+          <Button
+            onClick={handleClickUpdateData}
+            color="secondary"
+            startIcon={
+              <Replay className={updateDataLoading ? "rotate-icon" : ""} />
+            }
+          >
+            Actualiser
           </Button>
           <CreateNewUser open={open} handleClose={handleClose} />
           <StyledDataGrid
@@ -347,12 +405,12 @@ export default function Users() {
               toolbar: CustomToolbar,
             }}
             getRowClassName={(params) =>
-              `super-app-theme--${params.row.isDeleted}`
+              `super-app-theme--${params.row.isDeleted}-${params.row.role}`
             }
           />
         </Box>
       )}
-    </>
+    </div>
   );
 }
 
