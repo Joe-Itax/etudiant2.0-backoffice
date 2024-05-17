@@ -1,0 +1,43 @@
+.persistant-drawer
+  header.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation4.MuiAppBar-root.MuiAppBar-colorPrimary.MuiAppBar-positionFixed.mui-fixed {
+  @apply w-full mb-10;
+  position: fixed !important;
+  top: 64px !important;
+  left: 64px !important;
+  padding: 0 !important;
+}
+@media screen and (max-width: 768px) {
+  .persistant-drawer header {
+    top: 64px !important;
+  }
+}
+
+.persistant-drawer
+  .css-1k455el
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+  padding: 0.8rem 0.2rem !important;
+  border-radius: 5px !important;
+}
+
+.persistant-drawer main {
+  margin-left: auto !important;
+  z-index: -1;
+}
+
+.persistant-drawer main .react-pdf__Document {
+  @apply flex justify-center;
+}
+
+.persistant-drawer
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
+  width: auto !important;
+  margin-top: 64px !important;
+}
+
+@media screen and (max-width: 768px) {
+  .persistant-drawer
+    .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft {
+    width: auto !important;
+    margin-top: 64px !important;
+  }
+}

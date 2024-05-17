@@ -1,0 +1,82 @@
+.ressources-page .hero {
+  @apply flex flex-col justify-center;
+}
+
+.resource-detail {
+  @apply flex;
+}
+
+.resource-detail .resource-info {
+  @apply sticky flex flex-col gap-3 w-full md:w-[35rem] border-r px-4 py-8;
+}
+
+.resource-detail .resource-info .title-section {
+  @apply flex items-center gap-2 text-[#3092FA] text-xl font-semibold border-b-2 border-[#3092FA] mb-6;
+}
+
+.resource-detail .resource-info h1 {
+  @apply text-xl font-bold mb-3;
+}
+
+.resource-detail .resource-info .description-resource {
+  @apply text-sm;
+}
+
+.resource-detail .resource-info .content-info {
+  @apply text-[#3092FA] font-semibold border-b border-[#3092FA];
+}
+
+.resource-detail .resource-info .commentaire form {
+  @apply flex flex-col gap-4;
+}
+
+.resource-detail .resource-info .commentaire form textarea {
+  @apply block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:border-[#4869ee] focus:shadow-[0_0_0_3px_#4869ee3f];
+}
+
+.resource-detail .resource-info .commentaire .comments {
+  @apply px-3 py-5 flex flex-col gap-7;
+}
+
+.resource-detail .resource-info .commentaire .comments .comment {
+  @apply flex flex-col gap-3;
+}
+
+.resource-detail .resource-info .commentaire .comments .comment .author {
+  @apply flex items-center gap-2;
+}
+
+.resource-detail
+  .resource-info
+  .commentaire
+  .comments
+  .comment
+  .author
+  .details-info {
+  @apply flex flex-col;
+}
+.resource-detail
+  .resource-info
+  .commentaire
+  .comments
+  .comment
+  .author
+  .details-info
+  .name
+  span {
+  @apply text-[#3092FA] font-semibold;
+}
+.resource-detail
+  .resource-info
+  .commentaire
+  .comments
+  .comment
+  .author
+  .details-info
+  .createdAt
+  span {
+  @apply text-gray-600 text-sm;
+}
+.resource-detail .resource-content {
+  @apply w-full justify-center items-center;
+}

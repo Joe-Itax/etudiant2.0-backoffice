@@ -7,6 +7,7 @@ import Users from "./pages/users";
 import Universities from "./pages/universities";
 import Message from "./pages/message";
 import Resources from "./pages/resources";
+import ResourceDetail from "./components/ressource-detail/ressource-detail";
 
 const routes = createBrowserRouter([
   {
@@ -24,6 +25,16 @@ const routes = createBrowserRouter([
       {
         path: "/resources",
         element: <Resources />,
+        // children: [
+        //   {
+        //     path: ":id",
+        //     element: <ResourceDetail />,
+        //   },
+        // ],
+      },
+      {
+        path: "/resources/:id",
+        element: <ResourceDetail />,
       },
       {
         path: "/universities",

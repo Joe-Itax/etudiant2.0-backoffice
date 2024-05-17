@@ -1,0 +1,84 @@
+.search-dialog
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthSm {
+  @apply relative;
+  max-width: 600px !important;
+}
+@media screen and (max-width: 640px) {
+  .search-dialog
+    .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation24.MuiDialog-paper.MuiDialog-paperScrollPaper.MuiDialog-paperWidthSm {
+    padding: 1.5rem 0.7rem !important;
+    margin: 32px 10px !important;
+    width: 100% !important;
+  }
+}
+
+.search-dialog .MuiDialogContent-root.MuiDialogContent-dividers {
+  padding: 16px 24px !important;
+}
+@media screen and (max-width: 500px) {
+  .search-dialog #scroll-dialog-title,
+  .search-dialog .MuiDialogContent-root.MuiDialogContent-dividers {
+    padding: 16px 10px !important;
+  }
+}
+
+.search-dialog .search-box {
+  @apply self-center w-full flex justify-center relative;
+}
+
+.search-dialog .search-box form.ais-SearchBox-form {
+  @apply rounded-full border px-4 py-2 bg-white flex justify-between items-center w-full sm:w-[35rem] sticky;
+}
+
+.search-dialog .search-box form.ais-SearchBox-form input {
+  @apply border-0 w-full px-2 focus-visible:outline-0;
+  box-shadow: none !important;
+}
+
+.search-dialog .search-box.search-box-focused form.ais-SearchBox-form {
+  @apply shadow-[0px_0px_5px_rgba(37,99,235,.5)] brightness-[1.2] border-[rgba(37,99,235,1)];
+}
+
+.search-dialog .search-box form.ais-SearchBox-form button.ais-SearchBox-submit {
+  @apply p-3 pl-3 max-[400px]:px-2;
+}
+.search-dialog
+  .search-box
+  form.ais-SearchBox-form
+  button.ais-SearchBox-submit
+  svg {
+  @apply w-5 h-5;
+}
+
+.search-dialog .ais-SearchBox-reset {
+  @apply hidden;
+}
+
+.search-dialog .search-result {
+  @apply flex flex-col;
+}
+
+.search-dialog .hits-container {
+  @apply flex flex-col py-6;
+}
+
+.search-dialog .hits-container .ais-Hits a {
+  @apply hover:bg-[#f1f7fe] rounded-3xl py-2 sm:py-6 px-2 flex items-start gap-3 z-50;
+}
+
+.search-dialog .hits-container .ais-Hits a .search-result-info {
+  @apply flex flex-col gap-2;
+}
+
+.search-dialog .hits-container .ais-Hits a h3 {
+  @apply text-[#3092fa] font-semibold text-[1.1rem] sm:text-xl;
+}
+
+.search-dialog .hits-container .ais-Hits a .categorie {
+  @apply text-gray-600 sm:text-[1rem] text-[.8rem];
+}
+
+.search-dialog .hits-container .ais-Hits a svg {
+  width: 25px;
+  height: 25px;
+}
