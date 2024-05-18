@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CircularProgress, Button } from "@mui/material";
-import { Send, ModeEdit, Delete } from "@mui/icons-material";
+import { ModeEdit, Delete } from "@mui/icons-material";
 import { formatTimestamp } from "../../utils/helper";
 import {
   RiInformation2Fill,
@@ -9,6 +9,8 @@ import {
   RiCommunityFill,
   RiFocus2Fill,
   RiUserSharedFill,
+  RiCheckDoubleFill,
+  RiCloseFill,
 } from "@remixicon/react";
 import BasicPopover from "../feedback/pop-over";
 import Avatar from "react-avatar";
@@ -25,10 +27,6 @@ export default function RessourceDetailInfo({
   findUserPublishedResource,
   handleClickModifyResource,
   handleClickDeleteResource,
-  handleSubmit,
-  onSubmit,
-  register,
-  errors,
   users,
 }) {
   const { setRessource } = useContext(ressourceContext);
@@ -48,6 +46,12 @@ export default function RessourceDetailInfo({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate();
+
+  const returnOnResourcesPage = () => {
+    navigate(-1);
+  };
   return (
     <div className="resource-info">
       <CustomizedSnackbars
@@ -56,10 +60,10 @@ export default function RessourceDetailInfo({
         setOpen={setOpenNotif}
         severity={severityNotif}
       />
-      <Link className="flex" to={`/resources`}>
+      <div className="flex cursor-pointer" onClick={returnOnResourcesPage}>
         <RiArrowLeftLine />
         <span>Voir toutes les ressources</span>
-      </Link>
+      </div>
       <span className="title-section">
         <RiInformation2Fill size={20} color="#3092FA" />{" "}
         <span>Information</span>
@@ -97,9 +101,10 @@ export default function RessourceDetailInfo({
           </span>
         )}
       </div>
-      <div className="flex gap-2">
+      <div className="flex items-center justify-between gap-2">
         <Button
           variant="contained"
+          color="success"
           startIcon={<ModeEdit />}
           onClick={handleClickModifyResource}
         >
@@ -114,48 +119,21 @@ export default function RessourceDetailInfo({
           Supprimer le document
         </Button>
       </div>
+      <div>
+        Ressource validé:
+        {!currentRessource.isValidated ? (
+          <div>
+            <RiCloseFill />
+          </div>
+        ) : (
+          <div>
+            <RiCheckDoubleFill />
+          </div>
+        )}
+      </div>
       <div className="commentaire border-t py-4">
         <span className="title">Commentaires</span>
-        <form onSubmit={handleSubmit(onSubmit)} className="">
-          <div>
-            <div className="mt-2.5">
-              <textarea
-                name="content"
-                id="content"
-                rows={2}
-                className=""
-                {...register("content", {
-                  required: "Le champ Commentaire est requis.",
-                  minLength: {
-                    value: 5,
-                    message: `La longueure minimum du message est de 5 caractères`,
-                  },
-                  pattern: {
-                    value: /\S/,
-                    message:
-                      "Le contenu de ce champ ne doit pas être vide ou contenir uniquement des espaces",
-                  },
-                })}
-              />
-            </div>
-            {errors.content?.message && (
-              <div>
-                <p className="text-red-500 text-[0.8rem] text-end">
-                  {errors.content?.message}
-                </p>
-              </div>
-            )}
-          </div>
 
-          <div className="self-end">
-            <button
-              type="submit"
-              className="flex items-center gap-2 bg-[#1976d2] px-4 py-2 rounded-full text-white font-bold"
-            >
-              <Send /> <span>Publié</span>
-            </button>
-          </div>
-        </form>
         <div className="comments">
           {!currentRessource || !users.length > 0 ? (
             <div className="flex justify-center">
@@ -263,9 +241,5 @@ RessourceDetailInfo.propTypes = {
   findUserPublishedResource: PropTypes.object.isRequired,
   handleClickModifyResource: PropTypes.func,
   handleClickDeleteResource: PropTypes.func,
-  handleSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  register: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
 };

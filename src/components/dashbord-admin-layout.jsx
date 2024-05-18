@@ -34,7 +34,7 @@ export default function DashbordAdminLayout() {
   } else {
     return (
       <>
-        <main className="">
+        <main className="root-main">
           <SideBar navbar={<Navbar />}>
             {" "}
             <ThemeProvider theme={theme}>

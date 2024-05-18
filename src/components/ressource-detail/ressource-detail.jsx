@@ -1,9 +1,8 @@
-import { useState, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useState, useContext, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
 import { CircularProgress } from "@mui/material";
 
-import adminUserContext from "../contexts/admin-user.context";
 import usersContext from "../contexts/users.context";
 import universityContext from "../contexts/university.context";
 import ressourceContext from "../contexts/ressource.context";
@@ -13,6 +12,12 @@ import CustomizedSnackbars from "../feedback/notif";
 import PdfViewer from "../pdf-viewer/pdf-viewer";
 import PersistentDrawerLeft from "../persistant-drawer/persistant-drawer";
 import RessourceDetailInfo from "./ressource-detail-info";
+import ModifyResource from "./modify-resource";
+import {
+  getAllUniversities,
+  getAllUsers,
+  getAllResources,
+} from "../get-datas/get-data";
 
 // import PropTypes from "prop-types";
 
@@ -20,12 +25,36 @@ import RessourceDetailInfo from "./ressource-detail-info";
 
 export default function ResourceDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { adminUser } = useContext(adminUserContext);
-  // console.log("adminUser: ", adminUser);
-  const { users } = useContext(usersContext);
-  const { university } = useContext(universityContext);
+  const { users, setUsers } = useContext(usersContext);
+  const { university, setUniversity } = useContext(universityContext);
   const { ressource, setRessource } = useContext(ressourceContext);
+
+  //UseEffect pour getAllUsers
+  useEffect(() => {
+    if (!users.length > 0) {
+      getAllUsers().then((res) => {
+        setUsers(res.allUsers);
+      });
+    }
+  }, [users]);
+  //UseEffect pour getAllUniversities
+  useEffect(() => {
+    if (!university.length > 0) {
+      getAllUniversities().then((res) => {
+        setUniversity(res.allUniversities);
+      });
+    }
+  }, [university]);
+  //UseEffect pour getAllResources
+  useEffect(() => {
+    if (!ressource.length > 0) {
+      getAllResources().then((res) => {
+        setRessource(res.allResources);
+      });
+    }
+  }, [ressource]);
 
   let findUserPublishedResource;
   let findNameOfUniversityIfExist;
@@ -52,7 +81,16 @@ export default function ResourceDetail() {
     setOpenNotif(true);
   };
 
-  const {
+  const [openModifyResource, setOpenModifyResource] = useState(false);
+
+  const handleClickOpenModifyResource = () => {
+    setOpenModifyResource(true);
+  };
+  const handleCloseModifyResource = () => {
+    setOpenModifyResource(false);
+  };
+
+  /*const {
     register,
     handleSubmit,
     formState: { errors },
@@ -85,7 +123,7 @@ export default function ResourceDetail() {
       setSeverityNotif("error");
       handleSubmitOpenNotif();
     }
-  };
+  };*/
 
   // console.log("ressource: ", ressource);
   // console.log("currentRessource: ", currentRessource);
@@ -113,8 +151,9 @@ export default function ResourceDetail() {
   const categorieKey = currentRessource.categorie;
   const categorie = categoriesMap[categorieKey] || "Autre";
   const handleClickModifyResource = async () => {
-    alert("fichier modifié");
-    try {
+    // alert("fichier modifié");
+    handleClickOpenModifyResource(true);
+    /*try {
       const res = await axiosInstance.get(
         `/api/ressources/${currentRessource.id}`
       );
@@ -131,11 +170,45 @@ export default function ResourceDetail() {
         "Une erreur est survenue lors du telechargement du fichier. Veuillez réessayer plustard."
       );
       handleSubmitOpenNotif();
-    }
+    }*/
   };
 
   const handleClickDeleteResource = async () => {
-    alert("fichier supprimé");
+    if (
+      confirm(`Etes vous sur de vouloir supprimer cette ressource ? \nInfos de la ressource: \n
+  Titre: ${currentRessource.title} \n
+  Description: ${currentRessource.description}\n
+  Categorie: ${currentRessource.categorie} \n
+  Université: ${findNameOfUniversityIfExist?.title} \n
+  Partager par: ${findUserPublishedResource.firstname} ${findUserPublishedResource.lastname}`)
+    ) {
+      try {
+        const res = await axiosInstance.delete(
+          `/api/admin/resources/${currentRessource.id}`
+        );
+
+        console.log("res: ", res);
+
+        setSeverityNotif("success");
+        setMessageNotif(res.data.message);
+        setRessource(res.data.allResources);
+        handleSubmitOpenNotif();
+        navigate(-1);
+      } catch (error) {
+        console.error("Erreur lors de la suppression du fichier:", error);
+        if (error?.response) {
+          setMessageNotif(error.response.data.message);
+        } else if (error?.code === "ERR_NETWORK") {
+          setMessageNotif(error.message);
+        } else {
+          setMessageNotif(
+            "Une erreur s'est produite. Veuillez reessayer plutard."
+          );
+        }
+        setSeverityNotif("error");
+        handleSubmitOpenNotif();
+      }
+    }
   };
 
   return (
@@ -146,7 +219,11 @@ export default function ResourceDetail() {
         setOpen={setOpenNotif}
         severity={severityNotif}
       />
-
+      <ModifyResource
+        open={openModifyResource}
+        handleClose={handleCloseModifyResource}
+        currentRessource={currentRessource}
+      />
       <div className="resource-content">
         {/* <div>
           {" "}
@@ -161,10 +238,6 @@ export default function ResourceDetail() {
               findUserPublishedResource={findUserPublishedResource}
               handleClickModifyResource={handleClickModifyResource}
               handleClickDeleteResource={handleClickDeleteResource}
-              handleSubmit={handleSubmit}
-              onSubmit={onSubmit}
-              register={register}
-              errors={errors}
               users={users}
               // adminUser={adminUser}
             />

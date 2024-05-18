@@ -1,11 +1,15 @@
-.MuiBox-root {
+html {
+  scroll-behavior: smooth;
+}
+
+.root-main .MuiBox-root {
   width: 95% !important;
   padding-inline: 5px !important;
 }
-.MuiBox-root .users-page {
+.root-main .MuiBox-root .users-page {
   width: 100% !important;
 }
-.MuiBox-root .users-page .MuiBox-root {
+.root-main .MuiBox-root .users-page .MuiBox-root {
   width: 100% !important;
   padding: 0 !important;
 }
@@ -31,4 +35,23 @@
 
 .rotate-icon {
   animation: rotate 0.8s linear infinite;
+}
+
+[type="text"]:focus,
+input:where(:not([type])):focus,
+[type="email"]:focus,
+[type="url"]:focus,
+[type="password"]:focus,
+[type="number"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="time"]:focus,
+[type="week"]:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  --tw-ring-shadow: 0 0 #0000 !important;
 }
