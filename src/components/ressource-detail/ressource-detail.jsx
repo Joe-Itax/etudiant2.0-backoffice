@@ -90,44 +90,6 @@ export default function ResourceDetail() {
     setOpenModifyResource(false);
   };
 
-  /*const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  const onSubmit = async (dataFromUser, event) => {
-    dataFromUser.authorId = adminUser.id;
-    dataFromUser.targetId = currentRessource.id;
-
-    event.preventDefault();
-    reset();
-
-    try {
-      const res = await axiosInstance.post(
-        `/api/ressources/${currentRessource.id}/comment`,
-        dataFromUser
-      );
-      // console.log("res: ", res);
-      setRessource(res.data.ressource);
-      setMessageNotif(res.data.message);
-      setSeverityNotif("success");
-      handleSubmitOpenNotif();
-    } catch (error) {
-      console.log("error: ", error);
-      if (error.response) {
-        setMessageNotif(error.response.data.message);
-      }
-      setMessageNotif("Une erreur s'est produite. Veuillez réessayer plutard!");
-      setSeverityNotif("error");
-      handleSubmitOpenNotif();
-    }
-  };*/
-
-  // console.log("ressource: ", ressource);
-  // console.log("currentRessource: ", currentRessource);
-
   if (!currentRessource) {
     return (
       <div className="w-full h-48 flex items-center justify-center my-24">
