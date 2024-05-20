@@ -5,10 +5,11 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import "./style.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   "pdfjs-dist/build/pdf.worker.min.js",
+//   import.meta.url
+// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 export default function PdfViewer({ urlPdf }) {
   const [numPages, setNumPages] = useState(0);
