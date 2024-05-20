@@ -13,23 +13,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 export default function PdfViewer({ urlPdf }) {
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
-  //   const [totalPages, setTotalPages] = useState(0);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
-    // setTotalPages(numPages);
   }
-
-  //   const handlePageChange = (event, newPage) => {
-  //     setPageNumber(newPage);
-  //   };
-  //   const goToPreviousPage = () => {
-  //     setPageNumber((prevPage) => Math.max(1, prevPage - 1));
-  //   };
-
-  //   const goToNextPage = () => {
-  //     setPageNumber((prevPage) => Math.min(numPages, prevPage + 1));
-  //   };
 
   return (
     <div className="pdf-viewer">
@@ -54,13 +41,6 @@ export default function PdfViewer({ urlPdf }) {
           />
         )}
       />
-      {/* {numPages > 0 && (
-        <div>
-          <p>
-            Page {pageNumber} sur {numPages}
-          </p>
-        </div>
-      )} */}
     </div>
   );
 }
