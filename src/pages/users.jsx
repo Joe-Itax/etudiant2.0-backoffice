@@ -355,6 +355,51 @@ export default function Users() {
           <CircularProgress size={100} />
         </div>
       )}
+      <div className="flex flex-wrap justify-center gap-8">
+        <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+          <div className="flex justify-center items-center gap-12 bg-blue-800 p-4 rounded-md">
+            <div className="flex flex-col justify-center  gap-5">
+              <div>
+                <span className="font-extrabold text-4xl">{`${
+                  users?.length || 0
+                }`}</span>
+              </div>
+              <div>
+                <span>Total Resources</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+          <div className="flex justify-center items-center gap-12 bg-green-800 p-4 rounded-md">
+            <div className="flex flex-col justify-center  gap-5">
+              <div>
+                <span className="font-extrabold text-4xl">{`${
+                  users?.filter((res) => res?.role == "Administrator").length ||
+                  0
+                }`}</span>
+              </div>
+              <div>
+                <span>Administrator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+          <div className="flex justify-center items-center gap-12 bg-red-800 p-4 rounded-md">
+            <div className="flex flex-col justify-center  gap-5">
+              <div>
+                <span className="font-extrabold text-4xl">{`${
+                  users?.filter((res) => res?.isDeleted).length || 0
+                }`}</span>
+              </div>
+              <div>
+                <span>User deleted</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {users.length > 0 && (
         <Box sx={{ height: 600, width: "100%" }}>
           <CustomizedSnackbars

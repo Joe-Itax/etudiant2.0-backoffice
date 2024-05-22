@@ -19,6 +19,12 @@ export default function Message() {
     }
   }, [message]);
 
+  useEffect(() => {
+    if (message.length > 0) {
+      setNumMessage(message.length);
+    }
+  }, [numMessage, message]);
+
   const [messageNotif, setMessageNotif] = useState("");
   const [severityNotif, setSeverityNotif] = useState("");
   const [openNotif, setOpenNotif] = useState(false);

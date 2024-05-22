@@ -95,6 +95,50 @@ export default function DisplayRessources() {
       </div>
       <div className="flex flex-col md:p-16 min-[500px]:px-8 py-12 px-4">
         <div>
+          <div className="flex flex-wrap justify-center gap-8">
+            <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+              <div className="flex justify-center items-center gap-12 bg-blue-800 p-4 rounded-md">
+                <div className="flex flex-col justify-center  gap-5">
+                  <div>
+                    <span className="font-extrabold text-4xl">{`${
+                      ressource?.length || 0
+                    }`}</span>
+                  </div>
+                  <div>
+                    <span>Total Resources</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+              <div className="flex justify-center items-center gap-12 bg-green-800 p-4 rounded-md">
+                <div className="flex flex-col justify-center  gap-5">
+                  <div>
+                    <span className="font-extrabold text-4xl">{`${
+                      ressource?.filter((res) => res.isValidated).length || 0
+                    }`}</span>
+                  </div>
+                  <div>
+                    <span>Validate Resources</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4 flex flex-wrap justify-center items-center gap-4 text-white">
+              <div className="flex justify-center items-center gap-12 bg-red-800 p-4 rounded-md">
+                <div className="flex flex-col justify-center  gap-5">
+                  <div>
+                    <span className="font-extrabold text-4xl">{`${
+                      ressource?.filter((res) => !res.isValidated).length || 0
+                    }`}</span>
+                  </div>
+                  <div>
+                    <span>Invalidate Resources</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="flex items-center mb-3 gap-3">
             <Button variant="contained" onClick={handleClickOpenCreateResource}>
               Créer une ressource
