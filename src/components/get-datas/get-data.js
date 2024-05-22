@@ -28,4 +28,13 @@ const getAllResources = async () => {
     console.log("error lors de la recuperation des ressources: ", error);
   }
 };
-export { getAllUsers, getAllUniversities, getAllResources };
+
+const getAllMessages = async () => {
+  try {
+    const res = await axiosInstance.get("/api/admin/messages");
+    return res.data;
+  } catch (error) {
+    console.log("error lors de la recuperation des messages: ", error);
+  }
+};
+export { getAllUsers, getAllUniversities, getAllResources, getAllMessages };

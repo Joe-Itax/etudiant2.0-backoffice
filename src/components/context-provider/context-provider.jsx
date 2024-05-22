@@ -7,6 +7,7 @@ import adminUserContext from "../contexts/admin-user.context";
 import usersContext from "../contexts/users.context";
 import universityContext from "../contexts/university.context";
 import ressourceContext from "../contexts/ressource.context";
+import messageContext from "../contexts/message.context";
 
 export default function ContextProvider({ children }) {
   const [isAdminAuthenticated, setAdminIsAuthenticated] = useState(null);
@@ -14,6 +15,7 @@ export default function ContextProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [university, setUniversity] = useState([]);
   const [ressource, setRessource] = useState([]);
+  const [message, setMessage] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -36,19 +38,23 @@ export default function ContextProvider({ children }) {
 
   return (
     <>
-      <adminUserContext.Provider value={{ adminUser, setAdminUser }}>
-        <authAdminStatusContext.Provider
-          value={{ isAdminAuthenticated, setAdminIsAuthenticated }}
-        >
-          <usersContext.Provider value={{ users, setUsers }}>
-            <ressourceContext.Provider value={{ ressource, setRessource }}>
-              <universityContext.Provider value={{ university, setUniversity }}>
-                {children}
-              </universityContext.Provider>
-            </ressourceContext.Provider>
-          </usersContext.Provider>
-        </authAdminStatusContext.Provider>
-      </adminUserContext.Provider>
+      <messageContext.Provider value={{ message, setMessage }}>
+        <adminUserContext.Provider value={{ adminUser, setAdminUser }}>
+          <authAdminStatusContext.Provider
+            value={{ isAdminAuthenticated, setAdminIsAuthenticated }}
+          >
+            <usersContext.Provider value={{ users, setUsers }}>
+              <ressourceContext.Provider value={{ ressource, setRessource }}>
+                <universityContext.Provider
+                  value={{ university, setUniversity }}
+                >
+                  {children}
+                </universityContext.Provider>
+              </ressourceContext.Provider>
+            </usersContext.Provider>
+          </authAdminStatusContext.Provider>
+        </adminUserContext.Provider>
+      </messageContext.Provider>
     </>
   );
 }

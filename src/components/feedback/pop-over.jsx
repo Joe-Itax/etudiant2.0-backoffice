@@ -1,6 +1,13 @@
-import { Popover, List, ListItem, ListItemText } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
+import {
+  Popover,
+  List,
+  ListItem,
+  ListItemText,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 
-import { RiMore2Fill } from "@remixicon/react";
 import PropTypes from "prop-types";
 
 export default function BasicPopover({
@@ -8,18 +15,18 @@ export default function BasicPopover({
   anchorEl,
   handleClick,
   handleClose,
+  textContent,
 }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
   return (
     <div>
-      <RiMore2Fill
-        onClick={handleClick}
-        aria-describedby={id}
-        size={40}
-        className="cursor-pointer hover:bg-slate-200 p-2 rounded-full"
-      />
+      <Tooltip title="Voir plus" placement="top">
+        <IconButton aria-label="settings" onClick={handleClick}>
+          <MoreVert />
+        </IconButton>
+      </Tooltip>
       <Popover
         id={id}
         open={open}
@@ -30,15 +37,12 @@ export default function BasicPopover({
           horizontal: "left",
         }}
       >
-        {/* <ul className="p-2">
-          <li className="p-2">Supprimer le commentaire</li>
-        </ul> */}
         <List>
           <ListItem
-            className="cursor-pointer hover:bg-slate-200"
+            className="cursor-pointer hover:bg-slate-100"
             onClick={deleteComment}
           >
-            <ListItemText primary="Supprimer le commentaire" />
+            <ListItemText primary={textContent} />
           </ListItem>
         </List>
       </Popover>
@@ -47,8 +51,9 @@ export default function BasicPopover({
 }
 
 BasicPopover.propTypes = {
-  deleteComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func,
   anchorEl: PropTypes.object,
-  handleClick: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  handleClick: PropTypes.func,
+  handleClose: PropTypes.func,
+  textContent: PropTypes.string,
 };

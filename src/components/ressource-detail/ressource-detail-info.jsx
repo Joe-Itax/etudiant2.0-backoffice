@@ -217,6 +217,7 @@ export default function RessourceDetailInfo({
                           anchorEl={anchorEl}
                           handleClick={handleClick}
                           handleClose={handleClose}
+                          textContent={"Supprimer le commentaire"}
                         />
                       </div>
                     </div>
