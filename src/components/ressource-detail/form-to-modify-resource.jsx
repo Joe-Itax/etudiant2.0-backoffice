@@ -22,13 +22,18 @@ export default function FormToModifyResource({ currentRessource }) {
 
   const { handleSubmit } = useForm();
 
-  const findNameOfUniversityIfExist = university.find(
-    (university) => currentRessource.universityId === university.id
-  );
+  let findNameOfUniversityIfExist;
+  if (!currentRessource.universityId || currentRessource.universityId == null) {
+    findNameOfUniversityIfExist = "";
+  } else {
+    findNameOfUniversityIfExist = university.find(
+      (university) => university.id === currentRessource.universityId
+    );
+  }
 
   const [titleValue, setTitleValue] = useState(currentRessource.title);
   const [universityValue, setUniversityValue] = useState(
-    findNameOfUniversityIfExist.title
+    findNameOfUniversityIfExist.title ?? ""
   );
   const [descriptionValue, setDescriptionValue] = useState(
     currentRessource.description
@@ -69,10 +74,10 @@ export default function FormToModifyResource({ currentRessource }) {
     dataFromUser.description = descriptionValue;
     dataFromUser.urlFichier = urlFichierValue;
     dataFromUser.categorie = categorieValue;
-    dataFromUser.university = universityValue;
+    dataFromUser.university = universityValue == "" ? null : universityValue;
     dataFromUser.isValidated = isValidated === "true" ? true : false;
 
-    console.log("data: ", dataFromUser);
+    // console.log("data: ", dataFromUser);
     try {
       const res = await axiosInstance.put(
         `/api/admin/resources/${currentRessource.id}`,

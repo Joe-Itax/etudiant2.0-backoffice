@@ -64,12 +64,18 @@ export default function ResourceDetail() {
     ressource.map((res) => {
       findUserPublishedResource = users.find((user) => res.userId === user.id);
 
-      findNameOfUniversityIfExist = university.find(
-        (university) => res.universityId === university.id
-      );
-
       if (res.id == id) {
         currentRessource = res;
+        if (
+          !currentRessource.universityId ||
+          currentRessource.universityId == null
+        ) {
+          findNameOfUniversityIfExist = "";
+        } else {
+          findNameOfUniversityIfExist = university.find(
+            (university) => university.id === currentRessource.universityId
+          );
+        }
       }
     });
   }
