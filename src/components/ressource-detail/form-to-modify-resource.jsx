@@ -47,16 +47,19 @@ export default function FormToModifyResource({ currentRessource }) {
   const [isValidated, setIsValidated] = useState(
     `${currentRessource.isValidated}`
   );
-  const handleTitleChange = (e, newValue) => {
+  const handleTitleChange = (e) => {
+    const newValue = e.target.value;
     setTitleValue(newValue);
   };
-  const handleUniversityChange = (event, newValue) => {
+  const handleUniversityChange = (e, newValue) => {
     setUniversityValue(newValue);
   };
-  const handleDescriptionChange = (e, newValue) => {
+  const handleDescriptionChange = (e) => {
+    const newValue = e.target.value;
     setDescriptionValue(newValue);
   };
-  const handleLinkChange = (e, newValue) => {
+  const handleLinkChange = (e) => {
+    const newValue = e.target.value;
     setUrlFichierValue(newValue);
   };
   const handleCategorieChange = (e, newValue) => {
@@ -77,7 +80,7 @@ export default function FormToModifyResource({ currentRessource }) {
     dataFromUser.university = universityValue == "" ? null : universityValue;
     dataFromUser.isValidated = isValidated === "true" ? true : false;
 
-    // console.log("data: ", dataFromUser);
+    // console.log("dataFromUser: ", dataFromUser);
     try {
       const res = await axiosInstance.put(
         `/api/admin/resources/${currentRessource.id}`,
@@ -130,7 +133,7 @@ export default function FormToModifyResource({ currentRessource }) {
                 name="title"
                 label="Title"
                 className="w-full"
-                defaultValue={titleValue}
+                value={titleValue}
                 onChange={handleTitleChange}
                 multiline
               />
@@ -145,7 +148,7 @@ export default function FormToModifyResource({ currentRessource }) {
                 id="description"
                 name="description"
                 className="w-full"
-                defaultValue={descriptionValue}
+                value={descriptionValue}
                 onChange={handleDescriptionChange}
               />
             </div>
@@ -159,7 +162,7 @@ export default function FormToModifyResource({ currentRessource }) {
                 id="urlFichier"
                 name="urlFichier"
                 className="w-full"
-                defaultValue={urlFichierValue}
+                value={urlFichierValue}
                 onChange={handleLinkChange}
               />
             </div>

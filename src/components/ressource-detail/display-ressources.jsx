@@ -158,7 +158,12 @@ export default function DisplayRessources() {
             Ressources
           </h2>
         </div>
-        {ressource.length > 0 ? (
+        {(ressource.length === 0 || !ressource) && (
+          <div>
+            <CircularProgress></CircularProgress>
+          </div>
+        )}
+        {ressource.length > 0 && ressource && (
           <>
             {ressource
               .map((res) => {
@@ -215,10 +220,6 @@ export default function DisplayRessources() {
               })
               .reverse()}
           </>
-        ) : (
-          <div>
-            <CircularProgress></CircularProgress>
-          </div>
         )}
       </div>
     </>

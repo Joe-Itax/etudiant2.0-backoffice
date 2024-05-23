@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import {
   AccountBalance,
   Chat,
   Home,
   LibraryBooks,
+  Logout,
   People,
 } from "@mui/icons-material";
 import {
@@ -15,8 +17,20 @@ import {
   Zoom,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../utils/axios-instance";
+import authAdminStatusContext from "../contexts/auth-admin.context";
 
 export default function Navbar() {
+  const { setAdminIsAuthenticated } = useContext(authAdminStatusContext);
+  const logoutAdmin = async () => {
+    try {
+      const res = axiosInstance("/api/admin/auth/logout");
+      console.log("logout: ", res);
+      setAdminIsAuthenticated(false);
+    } catch (error) {
+      console.log("error lors du logout: ", error);
+    }
+  };
   return (
     <nav>
       <List>
@@ -166,6 +180,33 @@ export default function Navbar() {
               <ListItemText primary="Messages" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
+
+          {/* Logout */}
+          <ListItemButton
+            onClick={logoutAdmin}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <Tooltip
+                title="Logout"
+                TransitionComponent={Zoom}
+                placement="right"
+              >
+                <Logout />
+              </Tooltip>
+            </ListItemIcon>
+            <ListItemText primary="Logout" sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
         </ListItem>
       </List>
     </nav>

@@ -3,9 +3,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import CustomizedSnackbars from "../components/feedback/notif";
 import authAdminStatusContext from "../components/contexts/auth-admin.context";
-import usersContext from "../components/contexts/users.context";
-import universityContext from "../components/contexts/university.context";
-import ressourceContext from "../components/contexts/ressource.context";
 import logo from "/assets/Etudiant-20.svg";
 import axiosInstance from "../utils/axios-instance";
 
@@ -21,9 +18,6 @@ export default function LoginDashbord() {
   const { isAdminAuthenticated, setAdminIsAuthenticated } = useContext(
     authAdminStatusContext
   );
-  const { setUsers } = useContext(usersContext);
-  const { setUniversity } = useContext(universityContext);
-  const { setRessource } = useContext(ressourceContext);
 
   const {
     register,
@@ -44,9 +38,6 @@ export default function LoginDashbord() {
       setSeverityNotif("success");
       handleSubmitOpenNotif();
       setAdminIsAuthenticated(res.data.isAdminAuthenticated);
-      setUsers(res.data.allUsers);
-      setUniversity(res.data.allUniversities);
-      setRessource(res.data.allRessources);
     } catch (error) {
       // console.log("error lors de la connection en tant que admin: ", error);
       setAdminIsAuthenticated(false);
